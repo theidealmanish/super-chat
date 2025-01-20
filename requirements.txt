@@ -4,3 +4,5 @@ langchain
 streamlit
 streamlit-card
 python-dotenv
+beautifulsoup4
+html2markdown
