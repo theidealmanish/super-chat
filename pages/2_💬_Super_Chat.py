@@ -1,8 +1,11 @@
 import streamlit as st
+from src.bots import get_bot
 
 if "bot_id" in st.query_params:
-    st.write(f"Bot ID: {st.query_params['bot_id']}")
+    bot_id = st.query_params["bot_id"]
+    bot = get_bot(bot_id)
 
+    st.write(f"Bot Name: {bot['NAME']}")
     st.write("Super Chat")
 
 
