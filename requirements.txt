@@ -3,3 +3,4 @@ snowflake-ml-python
 langchain
 streamlit
 streamlit-card
+python-dotenv
