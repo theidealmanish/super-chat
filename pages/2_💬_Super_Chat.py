@@ -17,4 +17,4 @@ if "bot_id" in st.query_params:
 else:
     st.error("Please select a bot first from Create or Choose Bot page")
     time.sleep(2)
-    st.switch_page("pages/1_🤖_Create_Bot.py")
+    st.switch_page("pages/1_🤖_Create_or_Choose_Bot.py")
