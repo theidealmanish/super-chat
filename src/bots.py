@@ -3,6 +3,7 @@ from typing import List, Optional
 from dataclasses import dataclass
 from datetime import datetime
 
+
 @dataclass
 class Bot:
     bot_id: int
@@ -35,6 +36,7 @@ class Bot:
             'CREATED_AT': self.created_at
         }
 
+
 def create_bot(name: str, description: str, image_url: str, type: str, source: str) -> Bot:
     """Create a bot with auto-generated ID"""
     S.sql("""
@@ -42,8 +44,10 @@ def create_bot(name: str, description: str, image_url: str, type: str, source: s
         VALUES (?, ?, ?, ?, ?)
     """, params=[name, description, image_url, type, source]).collect()
     S.sql("COMMIT").collect()
+    bot = S.sql(
+        "SELECT * FROM BOTS ORDER BY CREATED_AT DESC").collect()[0]
     print("Bot created successfully")
-    return True
+    return bot['BOT_ID']
 
 
 def get_bots() -> List[Bot]:
@@ -59,14 +63,16 @@ def get_bots() -> List[Bot]:
         created_at=row['CREATED_AT']
     ) for row in results]
 
+
 def get_bot(bot_id: int) -> Optional[Bot]:
     """Get a bot by ID"""
-    result = S.sql("SELECT * FROM BOTS WHERE BOT_ID = ?", params=[bot_id]).collect()
+    result = S.sql("SELECT * FROM BOTS WHERE BOT_ID = ?",
+                   params=[bot_id]).collect()
     if not result:
         return None
-    
+
     bot_data = result[0]
-    
+
     return Bot(
         bot_id=bot_data['BOT_ID'],
         name=bot_data['NAME'],
