@@ -16,7 +16,7 @@ def get_urls_from_sitemap(sitemap_url):
         response.raise_for_status()
 
         # Parse XML
-        soup = BeautifulSoup(response.text, 'xml')
+        soup = BeautifulSoup(response.text, 'lxml')
 
         # Initialize empty list for URLs
         urls = []
