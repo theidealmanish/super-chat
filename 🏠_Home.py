@@ -7,7 +7,7 @@ st.set_page_config(
 
 st.title('Super Chat')
 st.subheader(
-    'Let everything talk!'
+    'Let the website talk to you!'
 )
 st.write('This is a chatbot that can talk about anything you want. Just ask a question and it will answer you. '
          'If you want to know more about a specific topic, you can ask the chatbot to search for it in the web. '
