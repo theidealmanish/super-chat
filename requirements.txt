@@ -7,4 +7,3 @@ python-dotenv
 beautifulsoup4
 html2markdown
 lxml
-xml
