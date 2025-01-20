@@ -34,7 +34,7 @@ def add_source():
             st.rerun()
 
 
-st.title("🤖 Create bot")
+st.title("🤖 Create or Choose bot")
 
 
 if st.button("Add Source"):
