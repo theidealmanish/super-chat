@@ -42,6 +42,8 @@ class RAG:
                 chunks = text_splitter.split_text(content['content'])
 
                 for chunk in chunks:
+                    print(chunk)
+                    print("===================================")
                     # Store each chunk in the database
                     self.session.sql(
                         """
@@ -73,9 +75,6 @@ class RAG:
         if chat_history is None:
             chat_history = []
 
-        print("context_str: ", context_str)
-        print("query: ", query)
-
         # send entire page for better context in terms of coding docs
         full_context = []
         urls = set(context['source_url'] for context in context_str)
@@ -83,7 +82,6 @@ class RAG:
             web_content = fetch_article_content(url)
             full_context.append(
                 {"content": web_content, "source_url": url})
-        print("full_context: ", full_context)
 
         prompt = f"""
         You are an expert chat assistant, you can find your identity in between <identity> and </identity> (That's what you call yourself),
@@ -128,7 +126,6 @@ class RAG:
         </Source>
         Answer:
         """
-        print("prompt: ", prompt)
         # Generate response using the LLM
         response = complete(self.model_name, prompt, session=self.session)
         return response
@@ -143,7 +140,6 @@ class RAG:
         # Step 2: Generate response
         response = self.generate_completion(
             query=query, context_str=retrieved_context, chat_history=chat_history)
-        print(response)
         return response
 
 

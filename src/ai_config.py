@@ -26,6 +26,7 @@ def create_chunk(bot_id, sitemap_url):
 
             for chunk in chunks:
                 print(chunk)
+                print("===================================")
                 # store it into the database
                 S.sql(
                     """
