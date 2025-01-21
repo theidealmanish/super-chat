@@ -1,11 +1,23 @@
 import streamlit as st
+from streamlit_lottie import st_lottie
 
 st.set_page_config(
     page_title="Super Chat",
     page_icon="🤖",
 )
 
+
+st_lottie(
+    "https://lottie.host/4558edf0-221f-456b-b543-ad7559ff3ffb/pqfg88ohcA.json",
+    height=300,
+    loop=True,
+    quality="high",
+    speed=5
+)
+
 st.title('Super Chat')
+
+
 st.subheader(
     'Let the website talk to you!'
 )
