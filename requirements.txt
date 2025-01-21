@@ -8,3 +8,7 @@ beautifulsoup4
 html2markdown
 lxml
 streamlit-lottie
+trulens-core 
+trulens-providers-cortex 
+trulens-connectors-snowflake 
+snowflake-sqlalchemy

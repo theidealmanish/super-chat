@@ -2,3 +2,4 @@
 .env
 /.devcontainer/
 .DS_Store
+/**/*.sqlite
