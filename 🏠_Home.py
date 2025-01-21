@@ -9,18 +9,24 @@ st.set_page_config(
 
 st_lottie(
     "https://lottie.host/4558edf0-221f-456b-b543-ad7559ff3ffb/pqfg88ohcA.json",
-    height=300,
+    height=200,
     loop=True,
     quality="high",
     speed=5
 )
 
-st.title('Super Chat')
-
+st.title('💬 Super Chat')
 
 st.subheader(
-    'Let the website talk to you!'
+    'Talk to Your Website, Simplified!'
 )
-st.write('This is a chatbot that can talk about anything you want. Just ask a question and it will answer you. '
-         'If you want to know more about a specific topic, you can ask the chatbot to search for it in the web. '
-         'You can also ask the chatbot to tell you a joke or a riddle. Have fun!')
+
+st.write(
+    "Welcome to **Super Chat**, your smart assistant for interacting with website content. Simply provide a sitemap or list of URLs, "
+    "and let Super Chat handle the rest. Ask natural language questions, and get precise, contextually relevant answers instantly. "
+    "Whether you're diving into complex documentation, exploring a new topic, or just looking for quick insights, Super Chat makes it effortless."
+)
+
+st.write(
+    "Ready to experience smarter interactions? Ask away, and let Super Chat bring the answers to you!"
+)
