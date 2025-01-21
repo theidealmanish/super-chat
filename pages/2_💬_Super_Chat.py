@@ -91,6 +91,11 @@ def main():
         bot_id = st.query_params["bot_id"]
         bot = get_bot(bot_id)
 
+        if not bot:
+            st.error("Bot not found.")
+            time.sleep(2)
+            st.switch_page("pages/1_🤖_Create_or_Choose_Bot.py")
+
         # Initialize the SuperRAG instance
         super_rag = initialize_super_rag(
             bot_id=bot_id, model_name=st.session_state.get("model_name", "mistral-large2"))
