@@ -44,32 +44,4 @@ def get_similar_chunks(query):
     """
     filter_obj = {"@eq": {"bot_id": st.query_params["bot_id"]}}
     response = SVC.search(query, COLUMNS, filter=filter_obj, limit=NUM_CHUNKS)
-    print(response)
     return response.model_dump_json()
-
-
-def generate_prompt(question):
-    """
-    Generate prompt for the question
-    """
-    prompt_context = get_similar_chunks(question)
-    prompt = f"""
-           You are an expert chat assistance that extracs information from the CONTEXT provided
-           between <context> and </context> tags.
-           When ansering the question contained between <question> and </question> tags
-           be concise and do not hallucinate. 
-           If you don´t have the information just say so.
-           Only anwer the question if you can extract it from the CONTEXT provideed.
-           
-           Do mention the CONTEXT used in your answer, with it's source URL in the url format.
-    
-           <context>          
-           {prompt_context}
-           </context>
-           <question>  
-           {question}
-           </question>
-           Answer: 
-           """
-    print("prompt: ", prompt)
-    print("prompt context: ", prompt_context)
