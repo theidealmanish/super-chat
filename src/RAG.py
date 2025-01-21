@@ -43,7 +43,6 @@ class RAG:
 
                 for chunk in chunks:
                     print(chunk)
-                    print("===================================")
                     # Store each chunk in the database
                     self.session.sql(
                         """
@@ -55,6 +54,7 @@ class RAG:
                     ).collect()
                     self.session.sql("COMMIT").collect()
                     print("Chunk created successfully.")
+                    print("===================================")
 
     @instrument
     def retrieve_context(self, query):
@@ -102,7 +102,7 @@ class RAG:
 
         Do not mention the CONTEXT used in your answer.
         Do not mention the CHAT HISTORY used in your answer.
-        Make the answer DESCRIPTIVE, and EXPLAINING, don't make it vague and short (make it at least 500 words).
+        Make the answer DESCRIPTIVE, and EXPLAINING, don't make it vague and short (make it at least 100 words).
 
         
         Provide all the sources as Source: with relevant URLs of the context you are using, that are clickable. 
