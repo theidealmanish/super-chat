@@ -7,10 +7,13 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent))
 
+st.set_page_config(
+    page_title="Create or Choose bot",
+    page_icon="🤖",
+)
+
 # get all bots
 bots = get_bots()
-
-# add source
 
 
 @st.dialog("Add your source")
