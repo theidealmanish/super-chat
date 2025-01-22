@@ -8,6 +8,7 @@ from datetime import datetime
 class Bot:
     bot_id: int
     name: str
+    tagline: Optional[str]
     description: str
     image_url: Optional[str]
     type: str
@@ -18,6 +19,7 @@ class Bot:
         return {
             'BOT_ID': self.bot_id,
             'NAME': self.name,
+            'TAGLINE': self.tagline,
             'DESCRIPTION': self.description,
             'IMAGE_URL': self.image_url,
             'TYPE': self.type,
@@ -29,6 +31,7 @@ class Bot:
         return {
             'BOT_ID': self.bot_id,
             'NAME': self.name,
+            'TAGLINE': self.tagline,
             'DESCRIPTION': self.description,
             'IMAGE_URL': self.image_url,
             'TYPE': self.type,
@@ -37,12 +40,12 @@ class Bot:
         }
 
 
-def create_bot(name: str, description: str, image_url: str, type: str, source: str) -> Bot:
+def create_bot(name: str, tagline: str, description: str, image_url: str, type: str, source: str) -> Bot:
     """Create a bot with auto-generated ID"""
     S.sql("""
-        INSERT INTO BOTS (NAME, DESCRIPTION, IMAGE_URL, TYPE, SOURCE) 
+        INSERT INTO BOTS (NAME, TAGLINE, DESCRIPTION, IMAGE_URL, TYPE, SOURCE) 
         VALUES (?, ?, ?, ?, ?)
-    """, params=[name, description, image_url, type, source]).collect()
+    """, params=[name, tagline, description, image_url, type, source]).collect()
     S.sql("COMMIT").collect()
     bot = S.sql(
         "SELECT * FROM BOTS ORDER BY CREATED_AT DESC").collect()[0]
@@ -56,6 +59,7 @@ def get_bots() -> List[Bot]:
     return [Bot(
         bot_id=row['BOT_ID'],
         name=row['NAME'],
+        tagline=row['TAGLINE'],
         description=row['DESCRIPTION'],
         image_url=row['IMAGE_URL'],
         type=row['TYPE'],
@@ -76,6 +80,7 @@ def get_bot(bot_id: int) -> Optional[Bot]:
     return Bot(
         bot_id=bot_data['BOT_ID'],
         name=bot_data['NAME'],
+        tagline=bot_data['TAGLINE'],
         description=bot_data['DESCRIPTION'],
         image_url=bot_data['IMAGE_URL'],
         type=bot_data['TYPE'],
