@@ -1,40 +1,56 @@
-from langchain.text_splitter import TextSplitter
-import requests
-import logging
-import html2markdown
 from bs4 import BeautifulSoup
+import requests
+import markdownify
+import logging
 
 
-def get_urls_from_sitemap(sitemap_url):
+def get_urls_from_sitemap(sitemap_url, exclude_prefixes=None):
     """
-    Scrape only blog URLs from a sitemap.xml file, excluding image URLs
+    Scrape URLs from a sitemap (XML or HTML), even if the extension is misleading.
+
+    Args:
+        sitemap_url (str): The URL of the sitemap.
+        exclude_prefixes (list, optional): List of URL prefixes to exclude (e.g., ['image:', 'video:']).
+
+    Returns:
+        list: A list of extracted URLs.
     """
     try:
-        # Fetch the sitemap
         response = requests.get(sitemap_url, headers={
                                 'User-Agent': 'Mozilla/5.0'})
         response.raise_for_status()
 
-        # Parse XML
-        soup = BeautifulSoup(response.text, 'lxml')
+        soup = BeautifulSoup(response.content, 'html.parser')
 
-        # Initialize empty list for URLs
-        urls = []
+        if soup.find("urlset"):
+            urls = [
+                url_tag.find('loc').text.strip()
+                for url_tag in soup.find_all('url')
+                if url_tag.find('loc') and not any(
+                    url_tag.find('loc').text.strip().startswith(prefix)
+                    for prefix in (exclude_prefixes or [])
+                )
+            ]
+            print("URLs from sitemap: ", urls)
+            return urls
 
-        # Find all url tags and extract only blog URLs
-        for url_tag in soup.find_all('url'):
-            # Get the loc tag that's a direct child of url tag
-            loc = url_tag.find('loc', recursive=False)
-            if loc and not loc.text.strip().startswith('image:'):
-                urls.append(loc.text.strip())
+        elif soup.find("table"):
+            urls = [
+                a_tag['href'].strip()
+                for a_tag in soup.find_all('a', href=True)
+                if not any(a_tag['href'].strip().startswith(prefix) for prefix in (exclude_prefixes or []))
+            ]
+            print("URLs from sitemap: ", urls)
+            return urls
 
-        return urls
+        print("Unknown sitemap format.")
+        return []
 
-    except requests.RequestException as e:
-        logging.error(f"Error fetching sitemap: {e}")
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching sitemap: {e}")
         return []
     except Exception as e:
-        logging.error(f"Error parsing sitemap: {e}")
+        print(f"Error parsing sitemap: {e}")
         return []
 
 
@@ -56,7 +72,7 @@ def fetch_article_content(url):
         content_text = '\n\n'.join([elem.text.strip() for elem in content])
 
         # Convert to markdown
-        markdown_content = html2markdown.convert(content_text)
+        markdown_content = markdownify.convert(content_text)
 
         return {'title': title, 'content': markdown_content, 'source_url': url}
 
