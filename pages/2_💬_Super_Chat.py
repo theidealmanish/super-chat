@@ -161,6 +161,7 @@ if "bot_id" in st.query_params:
 
             <identity>
             Name: {bot['NAME']}
+            Tagline: {bot['TAGLINE']}
             Description: {bot['DESCRIPTION']}
             </identity>
             <chat_history>
@@ -186,6 +187,7 @@ if "bot_id" in st.query_params:
 
     def main():
         st.title(f"💬 Super Chat with {bot['NAME']}")
+        st.success(f"{bot['DESCRIPTION']}")
         config_options()
         init_messages()
 
