@@ -20,14 +20,18 @@ bots = get_bots()
 def add_source():
     name = st.text_input("Name your bot")
     description = st.text_area("Describe your bot")
-    image_url = st.text_input("Enter the image url")
+    image_url = st.text_input(
+        "Enter the image url") or "https://img.freepik.com/free-vector/graident-ai-robot-vectorart_78370-4114.jpg"
     type = st.selectbox("Type of source", ["Website links", "Sitemap"])
     if type == "Website links":
         source = st.text_input("Enter the website links (separated by comma)",
                                placeholder="https://react.dev/docs/form, https://react.dev/docs/input, ...")
     elif type == "Sitemap":
         source = st.text_input("Enter the sitemap url")
-    if st.button("Submit"):
+
+    st.error(
+        "We have limited the bot creation due to spamming. Please visit our GitHub to clone the repo and try it.")
+    if st.button("Submit", disabled=True):
         with st.spinner("Creating bot..."):
             st.session_state.source = {"name": name, "description": description,
                                        "image_url": image_url, "type": type, "source": source}
