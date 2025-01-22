@@ -13,6 +13,11 @@ sys.path.append(str(Path(__file__).parent.parent))
 NUM_CHUNKS = 5
 slide_window = 10
 
+st.set_page_config(
+    page_title="Super Chat",
+    page_icon="💬",
+)
+
 
 # columns to query in the service
 COLUMNS = [
