@@ -122,8 +122,11 @@ if "bot_id" in st.query_params:
         source_urls = set(item['source_url']
                           for item in json_data['results'])
         prompt = f"""
-            You are an expert chat assistance,
-            whose identity is in between <identity> and </identity> tags.
+            You are an expert chat assistant.
+            Your identity is in between <identity> and </identity> tags,
+            whenever you are asked question about you, like who are you, what is your name etc.,
+            you answer based on the <identity> tags.
+            
             You extract information from the CONTEXT provided
             between <context> and </context> tags.
 
