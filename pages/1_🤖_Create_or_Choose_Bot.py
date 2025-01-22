@@ -31,6 +31,9 @@ def add_source():
 
     st.error(
         "We have limited the bot creation due to spamming. Please visit our GitHub to clone the repo and try it.")
+    st.markdown(
+        "[GitHub Repo](https://github.com/theidealmanish/super-chat)")
+
     if st.button("Submit", disabled=True):
         with st.spinner("Creating bot..."):
             st.session_state.source = {"name": name, "description": description,
@@ -44,7 +47,7 @@ def add_source():
 st.title("🤖 Create or Choose bot")
 
 
-if st.button("Add Source"):
+if st.button("Create a new bot"):
     add_source()
 
 # Create columns for card layout
