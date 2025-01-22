@@ -49,7 +49,7 @@ if "bot_id" in st.query_params:
         st.sidebar.button(
             "Start Over", key="clear_conversation", on_click=init_messages)
         st.sidebar.checkbox(
-            'Debug: Click to see summary generated of previous conversation', key="debug", value=True)
+            'Debug: Click to see summary generated of previous conversation', key="debug", value=False)
         st.sidebar.expander("Session State").write(st.session_state)
 
     def init_messages():
@@ -156,7 +156,8 @@ if "bot_id" in st.query_params:
             
             The source urls are provided in the <source_url> and </source_url> tags. 
             You add the "Source: " as a clickable links after the answers for the user to 
-            verify the information. If there are multiple sources list them all.
+            verify the information. If there are multiple sources only list what seems to be
+            related to the question.
 
             <identity>
             Name: {bot['NAME']}
