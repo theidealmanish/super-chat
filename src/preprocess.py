@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-import markdownify
+import html2markdown
 import logging
 
 
@@ -72,7 +72,7 @@ def fetch_article_content(url):
         content_text = '\n\n'.join([elem.text.strip() for elem in content])
 
         # Convert to markdown
-        markdown_content = markdownify.convert(content_text)
+        markdown_content = html2markdown.convert(content_text)
 
         return {'title': title, 'content': markdown_content, 'source_url': url}
 
