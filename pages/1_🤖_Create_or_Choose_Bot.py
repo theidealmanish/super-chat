@@ -18,10 +18,12 @@ bots = get_bots()
 
 @st.dialog("Add your source")
 def add_source():
-    name = st.text_input("Name your bot")
-    description = st.text_area("Describe your bot")
+    name = st.text_input("Name", placeholder="Terminator")
+    tagline = st.text_input("Tagline", placeholder="I'll be back")
+    description = st.text_area(
+        "Description", placeholder="I'm a bot that can chat with you. Ask me how to disable me.")
     image_url = st.text_input(
-        "Enter the image url") or "https://img.freepik.com/free-vector/graident-ai-robot-vectorart_78370-4114.jpg"
+        "Image", placeholder="https://terminator.com/cool-guy.jpg") or "https://img.freepik.com/free-vector/graident-ai-robot-vectorart_78370-4114.jpg"
     type = st.selectbox("Type of source", ["Website links", "Sitemap"])
     if type == "Website links":
         source = st.text_input("Enter the website links (separated by comma)",
@@ -36,9 +38,9 @@ def add_source():
 
     if st.button("Submit", disabled=True):
         with st.spinner("Creating bot..."):
-            st.session_state.source = {"name": name, "description": description,
+            st.session_state.source = {"name": name, "tagline": tagline, "description": description,
                                        "image_url": image_url, "type": type, "source": source}
-            bot_id = create_bot(name=name, description=description,
+            bot_id = create_bot(name=name, tagline=tagline, description=description,
                                 image_url=image_url, type=type, source=source)
             create_chunk(bot_id, sitemap_url=source)
             st.rerun()
@@ -59,7 +61,7 @@ for idx, bot in enumerate(bots):
         hasClicked = card(
             key=str(bot["BOT_ID"]),
             title=bot["NAME"],
-            text=bot["DESCRIPTION"],
+            text=bot["TAGLINE"],
             image=bot["IMAGE_URL"],
             styles={
                 "card": {
