@@ -121,6 +121,7 @@ if "bot_id" in st.query_params:
         json_data = json.loads(prompt_context)
         source_urls = set(item['source_url']
                           for item in json_data['results'])
+        print("source_urls: ", source_urls)
         prompt = f"""
             You are an expert chat assistant.
             Your identity is in between <identity> and </identity> tags,
@@ -154,8 +155,8 @@ if "bot_id" in st.query_params:
             Only answer the question if you can extract it from the CONTEXT provideed.
             
             The source urls are provided in the <source_url> and </source_url> tags. 
-            You add the "Source: " as a clickable link after the answers for the user to 
-            verify the information.
+            You add the "Source: " as a clickable links after the answers for the user to 
+            verify the information. If there are multiple sources list them all.
 
             <identity>
             Name: {bot['NAME']}
